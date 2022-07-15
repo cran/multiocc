@@ -1,0 +1,16 @@
+4633a40758b0a14860b1227be17770b3 *DESCRIPTION
+21c750abe6d645d103c8e1feb5a18ddf *NAMESPACE
+e7a72e4338f94b7f8111f854efb6604b *R/coords.R
+0ba70839bf8292938b7dda2229228e09 *R/create.data.R
+900ae6a07cd803818a44cc8d7ce7c46b *R/data.R
+18f5c700f5442e6c098b524a692ae65f *R/detection.R
+2fd1e9f22bda321ffdd3cc19c7c9e872 *R/make.basis.R
+eff6c6d13f5b2eb7ab162929da0faf8a *R/occupancy.R
+d88efaffb9f160d697b1849970cc6528 *R/run.mcmc.R
+e5812289e0a60caa533206eda35f1b6d *data/Example.rda
+0def4cdef18d1f33488e9cda44bdcde2 *man/coords.Rd
+7eef8ecea9d10f06d4e0b68471c0d259 *man/create.data.Rd
+7ae8f8a6c7bab2a211eca8295729c5b0 *man/detection.Rd
+2bd6026b7e7c731ba6fb73aa79dd2cb6 *man/make.basis.Rd
+6082f5293ffc5feac2fa244c7faa59aa *man/occupancy.Rd
+bdfa9c4ac81e810517a1ea73225b839c *man/run.mcmc.Rd
