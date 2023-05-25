@@ -8,7 +8,7 @@
 An object of class \code{data.frame} with 267 rows and 3 columns.
 }
 \usage{
-data(Example)
+data(coords)
 }
 \description{
 \describe{site by x coordinate by y coordinate}

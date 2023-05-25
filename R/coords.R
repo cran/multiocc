@@ -2,6 +2,6 @@
 
 #' \describe{site by x coordinate by y coordinate}
 #' @name coords
-#' @usage data(Example)
+#' @usage data(coords)
 #' @title Coords
 "coords"

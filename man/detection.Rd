@@ -8,7 +8,7 @@
 An object of class \code{data.frame} with 8010 rows and 10 columns.
 }
 \usage{
-data(Example)
+data(detection)
 }
 \description{
 \describe{site by season by survey, for six species.

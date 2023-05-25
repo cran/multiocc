@@ -1,25 +1,3 @@
-
-### first run the create.data function to create the model.output list
-
-## We assume the raw data are collected in space and time, for S species.
-
-## S = number of species
-## T = number of unique time periods
-## L = number of unique locations
-
-## If every location was active during every time period, then the total number
-## of observations is N = T*L; however, this code allows for the possibility that
-## cameras come in and out of functioning over the study period, and so in general
-## N < T*L.
-
-## Dependencies
-#library(MASS)
-#library(truncnorm)
-#library(tmvtnorm)
-#library(fields)
-#library(interp)
-#library(MCMCpack)
-
 #' This function constructs basis functions.  It assumes coordinates form a metric.
 #'
 #' @param q The desired number of basis functions.  Must be an integer greater than or equal to 1.
@@ -31,10 +9,7 @@
 #' }
 #' @export
 
-### first run the create.data function to output model.input
-### coords are columns x and y in model.output$occupancy.info
-
-make.basis = function(q=q, model.input){
+MakeBasis = function(q=q, model.input){
 
   coords = model.input$occupancy.info[,c("x","y")]
   X = model.input$X
@@ -51,7 +26,7 @@ make.basis = function(q=q, model.input){
   K = matrix(0,dim(A)[1],q*T)
   for(t in 1:T){
     Tind = which(seasonInd==t)
-    P = diag(length(Tind))-X[Tind,]%*%ginv(t(X[Tind,])%*%X[Tind,])%*%t(X[Tind,])
+    P = diag(length(Tind))-X[Tind,]%*%MASS::ginv(t(X[Tind,])%*%X[Tind,])%*%t(X[Tind,])
     OM = P%*%A[Tind,Tind]%*%P
     S0 = Re(eigen(OM)$values)
     ## eig2keep = which(S0>0)[1:q]
@@ -65,12 +40,11 @@ make.basis = function(q=q, model.input){
       for(j in 1:q){
         ### check to see if it oscillates from the previous time period or not
         ### need to expand to all locations
-        Ugridold = interp(coords$x[Tind0],coords$y[Tind0],tempold[,j],xo=xo,yo=yo,linear=TRUE,extrap=TRUE)
-        Ugrid = interp(coords$x[Tind],coords$y[Tind],temp[,j],xo=xo,yo=yo,linear=TRUE,extrap=TRUE)
+        Ugridold = interp::interp(coords$x[Tind0],coords$y[Tind0],tempold[,j],xo=xo,yo=yo,linear=TRUE,extrap=TRUE)
+        Ugrid = interp::interp(coords$x[Tind],coords$y[Tind],temp[,j],xo=xo,yo=yo,linear=TRUE,extrap=TRUE)
         Ugridold$z[which(is.na(Ugridold$z))]=0
         Ugrid$z[which(is.na(Ugrid$z))]=0
-        #image.plot(Ugridold$z)
-        #image.plot(Ugrid$z)
+
         if(norm(Ugrid$z-Ugridold$z)>norm(-1*Ugrid$z-Ugridold$z)){
           temp[,j]=-1*temp[,j]
         }
@@ -91,4 +65,3 @@ make.basis = function(q=q, model.input){
   out=list(KtQK, K)
   return(out)
 }
-

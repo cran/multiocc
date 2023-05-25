@@ -8,10 +8,10 @@
 An object of class \code{data.frame} with 2670 rows and 4 columns.
 }
 \usage{
-data(Example)
+data(occupancy)
 }
 \description{
 \describe{site by season with covariate forest (standardized percentage forest cover)
- and elevation (standardized).}
+and elevation (standardized).}
 }
 \keyword{datasets}
