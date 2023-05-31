@@ -1,6 +1,6 @@
 Package: multiocc
 Title: Fits Multivariate Spatio-Temporal Occupancy Model
-Version: 0.2.0
+Version: 0.2.1
 Depends: R (>= 4.1.0), MASS, tmvtnorm, truncnorm, coda
 Authors@R: c(person(given = "Staci",
            family = "Hepler",
@@ -19,11 +19,11 @@ Suggests: knitr, fields, rmarkdown, MCMCpack, corrplot, testthat (>=
         3.0.0)
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2023-05-24 21:02:59 UTC; erhardrj
+Packaged: 2023-05-30 15:46:33 UTC; erhardrj
 Imports: stats, utils, interp
 Config/testthat/edition: 3
 Author: Staci Hepler [aut, cre],
   Rob Erhardt [aut]
 Maintainer: Staci Hepler <heplersa@wfu.edu>
 Repository: CRAN
-Date/Publication: 2023-05-25 07:20:06 UTC
+Date/Publication: 2023-05-31 08:00:16 UTC

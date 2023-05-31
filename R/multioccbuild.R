@@ -9,7 +9,7 @@
 #'
 #' @param detection A data frame that has one row for every site X season X survey combination.
 #' Must contain columns exactly named 'site', 'season', and 'survey' within season.
-#' Must also contain all covaraites in the detection process of the model, and binary indicators of detections for all species
+#' Must also contain all covariates in the detection process of the model, and binary indicators of detections for all species
 #' to be modeled.  It is permissible for this data frame to have columns for species and/or variables
 #' that will not be used in model.
 #'
@@ -70,11 +70,19 @@ multioccbuild <- function(detection,occupancy,coords,DataNames,threshold){
   detection$site = as.factor(detection$site)
   occupancy$site = as.factor(occupancy$site)
   coords$site = as.factor(coords$site)
-  detection$siteID = as.numeric(detection$site)
-  detloc = detection[,c("site","siteID")]
-  detloc = detloc[!duplicated(detloc),]
-  occupancy = merge(occupancy,detloc,by="site",all.x=TRUE,all.y=FALSE)
-  coords = merge(coords,detloc,by="site",all.x=TRUE,all.y=FALSE)
+  occupancy$siteID = as.numeric(occupancy$site)
+  occloc = occupancy[,c("site","siteID")]
+  occloc = occloc[!duplicated(occloc),]
+  occloc2 = occupancy[,c("site","siteID","season")]
+  occloc2 = occloc2[!duplicated(occloc2),]
+  detection = merge(detection,occloc2,by=c("site","season"),all.y=TRUE,all.x=TRUE)
+
+  if(length(which(is.na(detection$survey)))>0){
+    detection$survey[which(is.na(detection$survey))]<-1
+    message("Warning: Rows with missing values in detection have been added to correspond to additional site/season combinations present in occupancy.")
+  }
+
+  coords = merge(coords,occloc,by="site",all.y=TRUE,all.x=FALSE)
 
   ### perform some checks
   ### should only be one row for each site x season combination
@@ -119,21 +127,21 @@ multioccbuild <- function(detection,occupancy,coords,DataNames,threshold){
 
 
   ### if site/season combos in occupancy but not detection, add rows with missing to detection
-  change<-0
-  for(i in 1:dim(occupancy)[1]){
-    II=which(detection$siteID==occupancy$siteID[i] & detection$season==occupancy$season[i])
-    if(length(II)<1){
-      detection = rbind(detection,rep(NA,dim(detection)[2]))
-      detection$site[dim(detection)[1]]=occupancy$site[i]
-      detection$siteID[dim(detection)[1]]=occupancy$siteID[i]
-      detection$season[dim(detection)[1]]=occupancy$season[i]
-      detection$survey[dim(detection)[1]]=1
-      change <- change+1
-    }
-  }
-  if(change>0){
-    message("Warning: Rows with missing values in detection have been added to correspond to additional site/season combinations present in occupancy.")
-  }
+  #change<-0
+  #for(i in 1:dim(occupancy)[1]){
+  #  II=which(detection$siteID==occupancy$siteID[i] & detection$season==occupancy$season[i])
+  #  if(length(II)<1){
+  #    detection = rbind(detection,rep(NA,dim(detection)[2]))
+  #    detection$site[dim(detection)[1]]=occupancy$site[i]
+  #    detection$siteID[dim(detection)[1]]=occupancy$siteID[i]
+  #    detection$season[dim(detection)[1]]=occupancy$season[i]
+  #    detection$survey[dim(detection)[1]]=1
+  #    change <- change+1
+  #  }
+  #}
+  #if(change>0){
+  #  message("Warning: Rows with missing values in detection have been added to correspond to additional site/season combinations present in occupancy.")
+  #}
 
   #### remove site/season combinations that have missing occupancy covariate data
   op = length(DataNames$occupancy)

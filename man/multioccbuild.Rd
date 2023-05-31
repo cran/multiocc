@@ -9,7 +9,7 @@ multioccbuild(detection, occupancy, coords, DataNames, threshold)
 \arguments{
 \item{detection}{A data frame that has one row for every site X season X survey combination.
 Must contain columns exactly named 'site', 'season', and 'survey' within season.
-Must also contain all covaraites in the detection process of the model, and binary indicators of detections for all species
+Must also contain all covariates in the detection process of the model, and binary indicators of detections for all species
 to be modeled.  It is permissible for this data frame to have columns for species and/or variables
 that will not be used in model.}
 

@@ -112,9 +112,10 @@ test_that("If all NAs occur in y", {
   wh.na.birds <- unique(c(wh.na.birds.1,wh.na.birds.2,wh.na.birds.3,wh.na.birds.4,wh.na.birds.5,wh.na.birds.6))
 
   wh.na.detection.only <- wh.na.detection[which(wh.na.detection %in% wh.na.birds==FALSE)]
-  detection<-detection[-wh.na.detection.only,]
-
+  detection <- detection[-which(detection$site=="Q125" & detection$season == 2),]
+  detection <- detection[-which(detection$site=="Q091" & detection$season == 8),]
   occupancy <- occupancy[-which(occupancy$site == "Q125" & occupancy$season == 2),]
+  occupancy <- occupancy[-which(occupancy$site == "Q091" & occupancy$season == 8),]
 
   expect_silent(
     multioccbuild(detection, occupancy, coords, DataNames, threshold = 15000)
